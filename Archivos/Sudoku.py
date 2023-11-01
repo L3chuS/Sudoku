@@ -1,6 +1,9 @@
+# Se crea un tablero de 9x9.
 ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
 def presentacion_juego():
+    """Función que presenta el juego, lo explica y da lugar al comienzo o no."""
+
     print("""
             \"Bienvenidos al Sudoku\"
 
@@ -17,7 +20,8 @@ número las veces que haga falta excepto los números
 iniciales.
 Si deseas continuar escriba "C". En caso contrario
 escriba "S".""")
-    
+
+    # Bucle que evalúa la elección del usuario para comenzar, finalizar o indicar una opción inválida.
     while(True):
         try:
             eleccion = input("\nOpción elegida: ")
@@ -29,17 +33,20 @@ escriba "S".""")
                 return None
             else:
                 raise ValueError
-            
+
         except ValueError:
             print("\nLa opción elegida no es correcta. Vuelva a intentarlo.")
         except KeyboardInterrupt:
             print("\n\nHasta luego")
             return None
-            
+
     return ""
         
 def dibujar_tablero(lista_tablero):
+    """Función que dibuja un tablero en la terminal el cual será usado para ir representando los
+       cambios introducidos por el jugador a partir de una lista tomada como argumento."""
 
+    # Contador para representar las filas del tablero.
     contador = 0
     print("""
   C   C   C   C   C   C   C   C   C
@@ -59,15 +66,20 @@ def dibujar_tablero(lista_tablero):
         contador += 1
     print("#-----------" * 3 + "#")
 
-    return ""
+    return
 
 def modificar_tablero(fila, columna, valor, tablero_modificar):
+    """Función que modifica el tablero del juego. Toma 4 argumentos. Los primeros 3
+       son los que se utilizan para modificar el último en el índice correspondiente."""
     tablero_modificar[fila-1][columna-1] = valor
 
 def ordenar_tablero(tablero_ordenar):
+    """Función que reordena las columnas y subgrupos del juego (cada grupo de 3x3) para poder
+       evaluar si son válidos o no. Es decir, devuelve cada columna o cada subgrupo para verificar
+       si cumple con las condiciones de victoria o no."""
 
     columnas_ordenadas = []
-    subgrupos_ordenados = [[], [], [], [], [], [], [], [], [],]
+    subgrupos_ordenados = [[] for i in range (9)]
 
     for filas in range(9):
         comprobador_columnas = []
