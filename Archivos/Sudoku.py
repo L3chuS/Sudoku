@@ -1,6 +1,7 @@
 # Se crea un tablero de 9x9.
 ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
+
 def presentacion_juego():
     """Función que presenta el juego, lo explica y da lugar al comienzo o no."""
 
@@ -42,6 +43,7 @@ escriba "S".""")
 
     return ""
         
+
 def dibujar_tablero(lista_tablero):
     """Función que dibuja un tablero en la terminal el cual será usado para ir representando los
        cambios introducidos por el jugador a partir de una lista tomada como argumento."""
@@ -59,19 +61,21 @@ def dibujar_tablero(lista_tablero):
                 print(f"| {lista_tablero[contador][columna]} ", end="")
             print(f"| F {contador + 1}")
             contador += 1
-            print("----" * 9 + "-") 
+            print("----" * 9 + "-")
         for columna in range(9):
-            print(f"| {lista_tablero[contador][columna]} ", end="")  
+            print(f"| {lista_tablero[contador][columna]} ", end="")
         print(f"| F {contador + 1}")
         contador += 1
     print("#-----------" * 3 + "#")
 
     return
 
+
 def modificar_tablero(fila, columna, valor, tablero_modificar):
     """Función que modifica el tablero del juego. Toma 4 argumentos. Los primeros 3
        son los que se utilizan para modificar el último en el índice correspondiente."""
     tablero_modificar[fila-1][columna-1] = valor
+
 
 def ordenar_tablero(tablero_ordenar):
     """Función que reordena las columnas y subgrupos del juego (cada grupo de 3x3) para poder
@@ -81,13 +85,18 @@ def ordenar_tablero(tablero_ordenar):
     columnas_ordenadas = []
     subgrupos_ordenados = [[] for i in range (9)]
 
+    # Se intera por cada fila del tablero.
     for filas in range(9):
+        # Se crea una lista vacía para añadirle los valores de cada columna.
         comprobador_columnas = []
+        # Se van agregando todos los valores de las columnas del índice de la variable "filas".
         for columnas in range(9):
             comprobador_columnas.append(tablero_ordenar[columnas][filas])
         columnas_ordenadas.append(comprobador_columnas)
 
+    # Se itera sobre el tablero para ir armando los subgrupos de 3x3.
     for elem in range(0,9,3):
+        # Por cada iteración se arman los grupos del 1 al 3, luego del 4 a 6 y finalmente del 7 al 9.
         for i in range(3):
             subgrupos_ordenados[elem] += tablero_ordenar[elem+i][:3]
             subgrupos_ordenados[elem+1] += tablero_ordenar[elem+i][3:6]
@@ -95,12 +104,19 @@ def ordenar_tablero(tablero_ordenar):
 
     return columnas_ordenadas, subgrupos_ordenados
 
+
 def comprobador_victoria(tablero_comprobar):
+    """Función que comprueba la victoria a partir de un tablero recibido como argumento.
+       Devuelve True o False."""
+
+    # Variable que se usa para comprobar la victoria. 
     comparador = [1,2,3,4,5,6,7,8,9]
 
-    for fila in tablero_comprobar:
-        if len(tablero_comprobar) != 9:
-            return False
+    for fila in tablero_comprobar:          
+        # if len(tablero_comprobar) != 9:   ######## REVISAR SI DA ERRORES. NO SE POR QUE ESTABA ESTA LINEA.########
+        #     return False                  ########################################################################
+
+        # Comprueba que no haya espacios "vacíos" representados con un "*".
         for elem in fila:
             if elem == "*":
                 return False      
