@@ -162,6 +162,7 @@ def random_tableros(tablero_generar):
                     if valor not in tablero_generar[fila-1]:
                         columnas_ordenadas, subgrupos_ordenados = ordenar_tablero(tablero_generar)
                         # Se evalúa que el valor no esté en la columna indicada.
+                        
                         if valor not in columnas_ordenadas[columna-1]:
                             if 0 < fila < 4:
                                 if 0 < columna < 4:
