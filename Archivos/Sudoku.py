@@ -134,13 +134,14 @@ def random_tableros():
     from random import shuffle
 
     valores = [1,2,3,4,5,6,7,8,9]
-    tablero_comprobar = []
-    repetido = False
+    tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+    repetido = False 
     
+
     for indice in range(9):
         if indice == 0:
             shuffle(valores)
-            tablero_comprobar.append(valores[:])
+            tablero_comprobar[indice] = valores[:]
         else:
             
             shuffle(valores)
@@ -154,6 +155,9 @@ def random_tableros():
                             repetido = True
                             break
                         
+                        # elif valores[valor] in ordenar_tablero(tablero_comprobar)[1][indice]:
+                        #     pass
+                                                
                         else:
                             indice_fila -= 1
 
@@ -161,13 +165,15 @@ def random_tableros():
                         shuffle(valores)
                         break
                 if repetido == False:
-                    tablero_comprobar.append(valores[:])
+                    tablero_comprobar[indice] = valores[:]
                     # print(tablero_comprobar)
                     shuffle(valores)
                     break
-        
+
     for linea in tablero_comprobar:
         print(linea)
+    
+
 
 
 print(random_tableros())
@@ -181,7 +187,7 @@ print(random_tableros())
 #     return ind_tablero_comprobar
 
 
-# x = [[5, 9, 3, 7, 6, 8, 2, 4, 1],[8, 7, 6, 1, 4, 2, 9, 5, 3],[1, 2, 4, 5, 9, 3, 7, 8, 6],[7, 6, 8, 9, 2, 5, 1, 3, 4],[4, 3, 2, 8, 1, 7, 6, 9, 5],[9, 1, 5, 6, 3, 4, 8, 7, 2],[6, 8, 1, 4, 5, 9, 3, 2, 7],[3, 4, 7, 2, 8, 1, 5, 6, 9],[2, 5, 9, 3, 7, 6, 4, 1, 8]]
+# x = [[1, 9, 3, 7, 6, 8, 2, 4, 1],[8, 7, 6, 1, 4, 2, 9, 5, 3],[1, 2, 4, 5, 9, 3, 7, 8, 6],[7, 6, 8, 9, 2, 5, 1, 3, 4],[4, 3, 2, 8, 1, 7, 6, 9, 5],[9, 1, 5, 6, 3, 4, 8, 7, 2],[6, 8, 1, 4, 5, 9, 3, 2, 7],[3, 4, 7, 2, 8, 1, 5, 6, 9],[2, 5, 9, 3, 7, 6, 4, 1, 8]]
 
 # print(comprobador_tablero_random(x))
 
