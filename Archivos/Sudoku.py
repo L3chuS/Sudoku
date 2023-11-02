@@ -148,18 +148,32 @@ def random_tableros():
             while True:
                 repetido = False
                 for valor in range(9):
-                    # print(valores[valor])
+                    if valor == 0 or valor == 1 or valor == 2:
+                        indice_subgrupo = 0
+                    elif valor == 3 or valor == 4 or valor == 5:
+                        indice_subgrupo = 1
+                    elif valor == 6 or valor == 7 or valor == 8:
+                        indice_subgrupo = 2
+
+
+                    print(valores[valor])
                     indice_fila = indice
+                    if 2 < indice < 6:
+                        indice_subgrupo += 3
+                    elif 5 < indice < 9:
+                        indice_subgrupo += 6 
                     while indice_fila != 0:
-                        if valores[valor] == tablero_comprobar[indice_fila-1][valor]:
+                        if valores[valor] != tablero_comprobar[indice_fila-1][valor]:
+                            print(ordenar_tablero(tablero_comprobar)[1][indice_subgrupo])
+                            if valores[valor] in ordenar_tablero(tablero_comprobar)[1][indice_subgrupo]:
+                                repetido = True
+                                break
+                            else:
+                                indice_fila -= 1
+                     
+                        else:
                             repetido = True
                             break
-                        
-                        # elif valores[valor] in ordenar_tablero(tablero_comprobar)[1][indice]:
-                        #     pass
-                                                
-                        else:
-                            indice_fila -= 1
 
                     if repetido == True:
                         shuffle(valores)
