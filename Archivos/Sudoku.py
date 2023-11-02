@@ -125,89 +125,65 @@ def comprobador_victoria(tablero_comprobar):
     else:
         return True
 
-def random_tableros(tablero_generar):
+def random_tableros():
     """Función para generar tableros con valores aleatorios. Primero intenta agregar el valor 1 una vez por fila
        y sin que se repita en la misma columna. Si se consigue agregarlo 9 veces (límite máximo del juego por cada
        valor) pasa al número 2 y así sucesivamente hasta llegar al 9 o al máximo de iteraciones posibles. Finalmente
        lo retorna para que sea evaluado si es un tablero válido para jugar."""
     
-    from random import randrange
+    from random import shuffle
 
-    valor = 0
-    contador_ite = 0
+    valores = [1,2,3,4,5,6,7,8,9]
+    tablero_comprobar = []
+    repetido = False
     
-    # Se inicia un primer bucle que finaliza cuando un tablero se completa o se alcanza el máximo de iteracciones.
-    while valor < 9:            
-        valor += 1
-        filas_disponibles = [1,2,3,4,5,6,7,8,9]
-        # Este limite impide que el generador se quede en un bucle infinito intentando agregar un valor.
-        if contador_ite == 500:
-            break
-
-        while (True):
-
-            contador_ite += 1
-            # Finaliza el bucle cuando un valor.
-            if len(filas_disponibles) == 0:
-                break
-            else:
-                # Se genera un valor aleatorio para elegir una fila a partir de los  filas disponibles.
-                fila = filas_disponibles[randrange(0,len(filas_disponibles))]
-                # Se genera un valor aleatorio para elegir una columna.
-                columna = randrange(1,10,1)
-
-                # Se evalúa primero si el espacio a ocupar está vacío.
-                if tablero_generar[fila-1][columna-1] == "*":
-                    # Se evalúa que el valor no esté en la fila.
-                    if valor not in tablero_generar[fila-1]:
-                        columnas_ordenadas, subgrupos_ordenados = ordenar_tablero(tablero_generar)
-                        # Se evalúa que el valor no esté en la columna indicada.
+    for indice in range(9):
+        if indice == 0:
+            shuffle(valores)
+            tablero_comprobar.append(valores[:])
+        else:
+            
+            shuffle(valores)
+            while True:
+                repetido = False
+                for valor in range(9):
+                    # print(valores[valor])
+                    indice_fila = indice
+                    while indice_fila != 0:
+                        if valores[valor] == tablero_comprobar[indice_fila-1][valor]:
+                            repetido = True
+                            break
                         
-                        if valor not in columnas_ordenadas[columna-1]:
-                            if 0 < fila < 4:
-                                if 0 < columna < 4:
-                                    ind_subgrupos = 0
-                                elif 3 < columna < 7:
-                                    ind_subgrupos = 1
-                                elif 6 < columna < 10:
-                                    ind_subgrupos = 2
-                            elif 3 < fila < 7:
-                                if 0 < columna < 4:
-                                    ind_subgrupos = 3
-                                elif 3 < columna < 7:
-                                    ind_subgrupos = 4
-                                elif 6 < columna < 10:
-                                    ind_subgrupos = 5
-                            elif 6 < fila < 10:
-                                if 0 < columna < 4:
-                                    ind_subgrupos = 6
-                                elif 3 < columna < 7:
-                                    ind_subgrupos = 7
-                                elif 6 < columna < 10:
-                                    ind_subgrupos = 8
+                        else:
+                            indice_fila -= 1
 
-                            if valor not in subgrupos_ordenados[ind_subgrupos]:
-                                modificar_tablero(fila, columna, valor, tablero_generar)
-                                filas_disponibles.remove(fila)
-
-            if contador_ite == 500:
-                break
-
-    ind_tablero_comprobar = tablero_generar[:]
-
-    return ind_tablero_comprobar
+                    if repetido == True:
+                        shuffle(valores)
+                        break
+                if repetido == False:
+                    tablero_comprobar.append(valores[:])
+                    # print(tablero_comprobar)
+                    shuffle(valores)
+                    break
+        
+    for linea in tablero_comprobar:
+        print(linea)
 
 
-print(random_tableros(ind_tablero_comprobar))
+print(random_tableros())
+
 # def comprobador_tablero_random(ind_tablero_comprobar):
 
 #     while comprobador_victoria(ind_tablero_comprobar) == False:
 
-#         ind_tablero_comprobar  = [["*" for c in range(9)] for f in range(9)]
-
-#         random_tableros(ind_tablero_comprobar)
+#         random_tableros()
             
 #     return ind_tablero_comprobar
+
+
+# x = [[5, 9, 3, 7, 6, 8, 2, 4, 1],[8, 7, 6, 1, 4, 2, 9, 5, 3],[1, 2, 4, 5, 9, 3, 7, 8, 6],[7, 6, 8, 9, 2, 5, 1, 3, 4],[4, 3, 2, 8, 1, 7, 6, 9, 5],[9, 1, 5, 6, 3, 4, 8, 7, 2],[6, 8, 1, 4, 5, 9, 3, 2, 7],[3, 4, 7, 2, 8, 1, 5, 6, 9],[2, 5, 9, 3, 7, 6, 4, 1, 8]]
+
+# print(comprobador_tablero_random(x))
 
 # def exportar_tableros():
 #     import csv
