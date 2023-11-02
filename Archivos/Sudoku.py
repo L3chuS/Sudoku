@@ -147,17 +147,21 @@ def random_tableros(tablero_generar):
         while (True):
 
             contador_ite += 1
-            # Finaliza el bucle cuando un valor 
+            # Finaliza el bucle cuando un valor.
             if len(filas_disponibles) == 0:
                 break
             else:
-                # Se genera un valor aleatorio para elegir una fila a partir de los  filas disponibles
+                # Se genera un valor aleatorio para elegir una fila a partir de los  filas disponibles.
                 fila = filas_disponibles[randrange(0,len(filas_disponibles))]
+                # Se genera un valor aleatorio para elegir una columna.
                 columna = randrange(1,10,1)
 
+                # Se evalúa primero si el espacio a ocupar está vacío.
                 if tablero_generar[fila-1][columna-1] == "*":
+                    # Se evalúa que el valor no esté en la fila.
                     if valor not in tablero_generar[fila-1]:
                         columnas_ordenadas, subgrupos_ordenados = ordenar_tablero(tablero_generar)
+                        # Se evalúa que el valor no esté en la columna indicada.
                         if valor not in columnas_ordenadas[columna-1]:
                             if 0 < fila < 4:
                                 if 0 < columna < 4:
