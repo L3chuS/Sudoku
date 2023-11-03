@@ -1,3 +1,5 @@
+import copy
+
 # Se crea un tablero de 9x9.
 ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
@@ -133,22 +135,80 @@ def random_tableros():
     
     from random import shuffle
 
-    valores = [1,2,3,4,5,6,7,8,9]
+    valores = [1+valor for valor in range(9)]
     tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
-    repetido = False 
+    repetido = True
+    paso1 = False
+    paso2 = False
     
-
-    for indice in range(9):
+    for indice in range(3):
+        opciones_subgrp1 = [1+valor for valor in range(9)]
+        shuffle(opciones_subgrp1)
+        opciones_subgrp2 = [1+valor for valor in range(9)]
+        shuffle(opciones_subgrp2)
+        opciones_subgrp3 = [1+valor for valor in range(9)]
+        shuffle(opciones_subgrp3)
+        
         if indice == 0:
             shuffle(valores)
             tablero_comprobar[indice] = valores[:]
+            
         else:
-            
+            for valor in range(3):
+                opciones_subgrp1.remove(tablero_comprobar[0][valor])
+                opciones_subgrp2.remove(tablero_comprobar[0][valor+3])
+                opciones_subgrp3.remove(tablero_comprobar[0][valor+6])
+
+            for numero in range(3):
+                tablero_comprobar[1][numero] = opciones_subgrp1[numero]
+                tablero_comprobar[2][numero] = opciones_subgrp1[numero+3]
+
+            while repetido == True:
+                contador = 3
+                tablero_comprobar_1 = copy.deepcopy(tablero_comprobar)
+                opciones_subgrp2_1 = opciones_subgrp2[:]
+                while paso1 == False:
+
+                    shuffle(opciones_subgrp2_1)
+                    if len(opciones_subgrp2_1) == 0:
+                        paso1 = True
+                        break
+                    if 0 < len(opciones_subgrp2_1) < 4 :
+                        if opciones_subgrp2_1[0] not in tablero_comprobar_1[2]:
+                            tablero_comprobar_1[2][contador-3] = opciones_subgrp2_1[0]
+                            contador += 1
+                            opciones_subgrp2_1.remove(opciones_subgrp2_1[0])
+                        else:
+                            break
+
+                    elif opciones_subgrp2_1[0] not in tablero_comprobar_1[1]:
+                        tablero_comprobar_1[1][contador] = opciones_subgrp2_1[0]
+                        contador += 1
+                        opciones_subgrp2_1.remove(opciones_subgrp2_1[0])
 
 
+                    
+                            
 
+                # while paso2 == False: 
+                #     shuffle(opciones_subgrp3)
+                #     for numero in range(3):
+                #         if opciones_subgrp3[numero] not in tablero_comprobar[1]:
+                #             tablero_comprobar[1][numero+6] = opciones_subgrp3[numero]
+                #         if opciones_subgrp3[numero+3] not in tablero_comprobar[2]:
+                #             tablero_comprobar[2][numero+6] = opciones_subgrp2[numero+3]
+                #         else:
+                #             paso2 = True
+                
+    
+    print(opciones_subgrp2)
+    print(opciones_subgrp3)
+    for linea in tablero_comprobar:
+        print(linea)
 
-            
+            # shuffle(valores)
+            # print(ordenar_tablero(tablero_comprobar))
+
             # shuffle(valores)
             # while True:
             #     repetido = False
@@ -189,13 +249,10 @@ def random_tableros():
             #         shuffle(valores)
             #         break
 
-    for linea in tablero_comprobar:
-        print(linea)
+    # for linea in tablero_comprobar:
+    #     print(linea)
     
-
-
-
-print(random_tableros())
+random_tableros()
 
 # def comprobador_tablero_random(ind_tablero_comprobar):
 
