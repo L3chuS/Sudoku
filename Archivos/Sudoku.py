@@ -1,4 +1,5 @@
 import copy
+from random import shuffle
 
 # Se crea un tablero de 9x9.
 ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
@@ -127,19 +128,42 @@ def comprobador_victoria(tablero_comprobar):
     else:
         return True
 
-def random_tableros():
+def random_tableros(tablero_comprobar):
     """Función para generar tableros con valores aleatorios. Primero intenta agregar el valor 1 una vez por fila
        y sin que se repita en la misma columna. Si se consigue agregarlo 9 veces (límite máximo del juego por cada
        valor) pasa al número 2 y así sucesivamente hasta llegar al 9 o al máximo de iteraciones posibles. Finalmente
        lo retorna para que sea evaluado si es un tablero válido para jugar."""
-    
-    from random import shuffle
 
-    valores = [1+valor for valor in range(9)]
-    tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+    contador = 0
+    paso1 = comprobar_lineas_random_tablero(tablero_comprobar, contador)
+
+
+def comprobar_lineas_random_tablero(tablero_comprobar, contador):
+
+    valores_disponibles = [1+valor for valor in range(9)]
+    shuffle(valores_disponibles)
     
+    for valor in range(3):
+        if valores_disponibles[0] not in tablero_comprobar[contador]:
+            print(ordenar_tablero(tablero_comprobar[contador]))
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar[contador]):
+                tablero_comprobar[contador][valor] = valores_disponibles[0]
+                valores_disponibles.remove(valores_disponibles[0])
+        else:
+            shuffle(valores_disponibles)
+
+
+
     
-random_tableros()
+    for linea in tablero_comprobar:
+        print(linea)
+
+    return tablero_comprobar
+
+tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+random_tableros(tablero_comprobar)
+
+
 
 # def comprobador_tablero_random(ind_tablero_comprobar):
 
