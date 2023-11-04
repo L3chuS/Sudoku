@@ -138,10 +138,24 @@ def random_tableros(tablero_comprobar):
 
     contador_filas = 0
     contador_columnas = 0
+    comprobador_subgrupos = [1+valor for valor in range(9)]
 
-    paso1 = comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
+    comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
-    paso2 = comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas+3)
+    tablero_modificado = copy.deepcopy(tablero_comprobar)
+
+    while True:
+        contador = 0
+        comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+3)
+        
+        for valor in ordenar_tablero(tablero_modificado)[1][1]:
+            if valor != "*":
+                contador += 1
+            elif valor == "*":
+                break
+        if contador == 9:
+            break
+        
 
 
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
@@ -155,8 +169,8 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
             if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas]:
                 tablero_comprobar[contador_filas][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
-        else:
-            shuffle(valores_disponibles)
+            else:
+                shuffle(valores_disponibles)
 
     # Se añaden del 4to al 6to número de la lista.
     for valor in range(3):
@@ -164,8 +178,8 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
             if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+1]:
                 tablero_comprobar[contador_filas+1][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
-        else:
-            shuffle(valores_disponibles)
+            else:
+                shuffle(valores_disponibles)
 
     # Se añaden del 7mo al 9no número de la lista.
     for valor in range(3):
@@ -173,9 +187,8 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
             if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+2]:
                 tablero_comprobar[contador_filas+2][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
-        else:
-            shuffle(valores_disponibles)
-
+            else:
+                shuffle(valores_disponibles)
 
     for linea in tablero_comprobar:
         print(linea)
