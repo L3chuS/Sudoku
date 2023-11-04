@@ -141,7 +141,7 @@ def random_tableros(tablero_comprobar):
     comprobador_subgrupos = [1+valor for valor in range(9)]
 
 
-    for subgrupo in range(3):
+    for subgrupo in range(6):
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
@@ -161,18 +161,31 @@ def random_tableros(tablero_comprobar):
                     indice_filas = 3
                     indice_columnas = 3
                 elif subgrupo == 5:
+                    tablero_modificado2 = copy.deepcopy(tablero_modificado)
                     indice_filas = 3
                     indice_columnas = 6
- 
-                comprobar_lineas_random_tablero(tablero_modificado, contador_filas+indice_filas, contador_columnas+indice_columnas)
                 
-                for valor in ordenar_tablero(tablero_modificado)[1][subgrupo]:
-                    if valor != "*":
-                        contador += 1
-                    elif valor == "*":
+                if subgrupo < 5:
+                    comprobar_lineas_random_tablero(tablero_modificado, contador_filas+indice_filas, contador_columnas+indice_columnas)
+                
+                    for valor in ordenar_tablero(tablero_modificado)[1][subgrupo]:
+                        if valor != "*":
+                            contador += 1
+                        elif valor == "*":
+                            break
+                    if contador == 9:
                         break
-                if contador == 9:
-                    break
+
+                elif subgrupo > 4:
+                    comprobar_lineas_random_tablero(tablero_modificado2, contador_filas+indice_filas, contador_columnas+indice_columnas)
+                
+                    for valor in ordenar_tablero(tablero_modificado2)[1][subgrupo]:
+                        if valor != "*":
+                            contador += 1
+                        elif valor == "*":
+                            break
+                    if contador == 9:
+                        break
 
       
     
