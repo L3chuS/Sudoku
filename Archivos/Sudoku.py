@@ -142,8 +142,6 @@ def random_tableros(tablero_comprobar):
 
     comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
-    # tablero_modificado = copy.deepcopy(tablero_comprobar)
-
     while True:
         contador = 0
         tablero_modificado = copy.deepcopy(tablero_comprobar)
