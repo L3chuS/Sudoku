@@ -140,20 +140,30 @@ def random_tableros(tablero_comprobar):
     contador_columnas = 0
     comprobador_subgrupos = [1+valor for valor in range(9)]
 
-    comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
-    while True:
-        contador = 0
-        tablero_modificado = copy.deepcopy(tablero_comprobar)
-        comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+3)
-        
-        for valor in ordenar_tablero(tablero_modificado)[1][1]:
-            if valor != "*":
-                contador += 1
-            elif valor == "*":
-                break
-        if contador == 9:
-            break
+    for subgrupo in range(3):
+        indice = 0
+        if subgrupo == 0:
+            comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
+
+        else:   
+            while True:
+                contador = 0
+                if subgrupo == 1:
+                    tablero_modificado = copy.deepcopy(tablero_comprobar)
+                    indice = 3
+                elif subgrupo == 2:
+                    indice = 6
+ 
+                comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+indice)
+                
+                for valor in ordenar_tablero(tablero_modificado)[1][subgrupo]:
+                    if valor != "*":
+                        contador += 1
+                    elif valor == "*":
+                        break
+                if contador == 9:
+                    break
         
 
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
@@ -176,7 +186,7 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
 
             if valor == 3:
                 break
-            elif contador_iter == 20:
+            elif contador_iter == 50:
                 break
 
 
