@@ -128,56 +128,59 @@ def comprobador_victoria(tablero_comprobar):
     else:
         return True
 
+tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+
 def random_tableros(tablero_comprobar):
     """Función para generar tableros con valores aleatorios. Primero intenta agregar el valor 1 una vez por fila
        y sin que se repita en la misma columna. Si se consigue agregarlo 9 veces (límite máximo del juego por cada
        valor) pasa al número 2 y así sucesivamente hasta llegar al 9 o al máximo de iteraciones posibles. Finalmente
        lo retorna para que sea evaluado si es un tablero válido para jugar."""
 
-    contador = 0
-    paso1 = comprobar_lineas_random_tablero(tablero_comprobar, contador)
+    contador_filas = 0
+    contador_columnas = 0
+
+    paso1 = comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
+
+    paso2 = comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas+3)
 
 
-def comprobar_lineas_random_tablero(tablero_comprobar, contador):
+def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
 
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
     
     # Se añaden los primeros 3 números de la lista.
     for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
-                tablero_comprobar[contador][valor] = valores_disponibles[0]
+        if valores_disponibles[0] not in tablero_comprobar[contador_filas]:
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas]:
+                tablero_comprobar[contador_filas][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
         else:
             shuffle(valores_disponibles)
 
     # Se añaden del 4to al 6to número de la lista.
     for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador+1]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
-                tablero_comprobar[contador+1][valor] = valores_disponibles[0]
+        if valores_disponibles[0] not in tablero_comprobar[contador_filas+1]:
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+1]:
+                tablero_comprobar[contador_filas+1][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
         else:
             shuffle(valores_disponibles)
 
     # Se añaden del 7mo al 9no número de la lista.
     for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador+2]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
-                tablero_comprobar[contador+2][valor] = valores_disponibles[0]
+        if valores_disponibles[0] not in tablero_comprobar[contador_filas+2]:
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+2]:
+                tablero_comprobar[contador_filas+2][valor+contador_columnas] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
         else:
             shuffle(valores_disponibles)
 
 
-    
     for linea in tablero_comprobar:
         print(linea)
 
-    return tablero_comprobar
 
-tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 random_tableros(tablero_comprobar)
 
 
