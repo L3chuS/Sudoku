@@ -142,10 +142,11 @@ def random_tableros(tablero_comprobar):
 
     comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
-    tablero_modificado = copy.deepcopy(tablero_comprobar)
+    # tablero_modificado = copy.deepcopy(tablero_comprobar)
 
     while True:
         contador = 0
+        tablero_modificado = copy.deepcopy(tablero_comprobar)
         comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+3)
         
         for valor in ordenar_tablero(tablero_modificado)[1][1]:
@@ -157,38 +158,29 @@ def random_tableros(tablero_comprobar):
             break
         
 
-
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
 
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
-    
     # Se añaden los primeros 3 números de la lista.
-    for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador_filas]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas]:
-                tablero_comprobar[contador_filas][valor+contador_columnas] = valores_disponibles[0]
-                valores_disponibles.remove(valores_disponibles[0])
+    for numero in range(3):
+        valor = 0
+        contador_iter = 0
+        while True:
+            if valores_disponibles[0] not in tablero_comprobar[contador_filas+numero]:
+                if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+numero]:
+                    tablero_comprobar[contador_filas+numero][valor+contador_columnas] = valores_disponibles[0]
+                    valores_disponibles.remove(valores_disponibles[0])
+                    valor += 1
             else:
                 shuffle(valores_disponibles)
+                contador_iter += 1
 
-    # Se añaden del 4to al 6to número de la lista.
-    for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador_filas+1]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+1]:
-                tablero_comprobar[contador_filas+1][valor+contador_columnas] = valores_disponibles[0]
-                valores_disponibles.remove(valores_disponibles[0])
-            else:
-                shuffle(valores_disponibles)
+            if valor == 3:
+                break
+            elif contador_iter == 20:
+                break
 
-    # Se añaden del 7mo al 9no número de la lista.
-    for valor in range(3):
-        if valores_disponibles[0] not in tablero_comprobar[contador_filas+2]:
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+2]:
-                tablero_comprobar[contador_filas+2][valor+contador_columnas] = valores_disponibles[0]
-                valores_disponibles.remove(valores_disponibles[0])
-            else:
-                shuffle(valores_disponibles)
 
     for linea in tablero_comprobar:
         print(linea)
