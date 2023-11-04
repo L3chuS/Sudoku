@@ -141,51 +141,45 @@ def random_tableros(tablero_comprobar):
     comprobador_subgrupos = [1+valor for valor in range(9)]
 
 
-    for subgrupo in range(6):
+    for subgrupo in range(3):
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
             comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
         else:   
-            while True:
-                contador = 0
-                if subgrupo == 1:
-                    tablero_modificado = copy.deepcopy(tablero_comprobar)
-                    indice_columnas = 3
-                elif subgrupo == 2:
-                    indice_columnas = 6
-                elif subgrupo == 3:
-                    indice_filas = 3
-                elif subgrupo == 4:
-                    indice_filas = 3
-                    indice_columnas = 3
-                elif subgrupo == 5:
-                    tablero_modificado2 = copy.deepcopy(tablero_modificado)
-                    indice_filas = 3
-                    indice_columnas = 6
-                
-                if subgrupo < 5:
-                    comprobar_lineas_random_tablero(tablero_modificado, contador_filas+indice_filas, contador_columnas+indice_columnas)
-                
-                    for valor in ordenar_tablero(tablero_modificado)[1][subgrupo]:
-                        if valor != "*":
-                            contador += 1
-                        elif valor == "*":
-                            break
-                    if contador == 9:
-                        break
+            if subgrupo == 1:
+                indice_columnas = 3
+                tablero_modificado = copy.deepcopy(tablero_comprobar)
+                lanzar_tablero(tablero_modificado, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+            elif subgrupo == 2:
+                indice_columnas = 6
+                tablero_modificado1 = copy.deepcopy(tablero_modificado)
+                lanzar_tablero(tablero_modificado1, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+            elif subgrupo == 3:
+                indice_filas = 3
+                tablero_modificado2 = copy.deepcopy(tablero_modificado1)
+                lanzar_tablero(tablero_modificado2, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+            # elif subgrupo == 4:
+            #     indice_filas = 3
+            #     indice_columnas = 3
+            # elif subgrupo == 5:
+            #     indice_filas = 3
+            #     indice_columnas = 6
+              
+def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
 
-                elif subgrupo > 4:
-                    comprobar_lineas_random_tablero(tablero_modificado2, contador_filas+indice_filas, contador_columnas+indice_columnas)
-                
-                    for valor in ordenar_tablero(tablero_modificado2)[1][subgrupo]:
-                        if valor != "*":
-                            contador += 1
-                        elif valor == "*":
-                            break
-                    if contador == 9:
-                        break
+    while True:
+        comprobar_lineas_random_tablero(tablero, contador_filas+indice_filas, contador_columnas+indice_columnas)
+        contador = 0         
+        for valor in ordenar_tablero(tablero)[1][subgrupo]:
+            
+            if valor != "*":
+                contador += 1
+            elif valor == "*":
+                break
+        if contador == 9:
+            break
 
       
     
