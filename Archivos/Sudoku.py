@@ -142,7 +142,8 @@ def random_tableros(tablero_comprobar):
 
 
     for subgrupo in range(3):
-        indice = 0
+        indice_filas = 0
+        indice_columnas = 0
         if subgrupo == 0:
             comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
@@ -151,11 +152,19 @@ def random_tableros(tablero_comprobar):
                 contador = 0
                 if subgrupo == 1:
                     tablero_modificado = copy.deepcopy(tablero_comprobar)
-                    indice = 3
+                    indice_columnas = 3
                 elif subgrupo == 2:
-                    indice = 6
+                    indice_columnas = 6
+                elif subgrupo == 3:
+                    indice_filas = 3
+                elif subgrupo == 4:
+                    indice_filas = 3
+                    indice_columnas = 3
+                elif subgrupo == 5:
+                    indice_filas = 3
+                    indice_columnas = 6
  
-                comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+indice)
+                comprobar_lineas_random_tablero(tablero_modificado, contador_filas+indice_filas, contador_columnas+indice_columnas)
                 
                 for valor in ordenar_tablero(tablero_modificado)[1][subgrupo]:
                     if valor != "*":
@@ -164,8 +173,9 @@ def random_tableros(tablero_comprobar):
                         break
                 if contador == 9:
                     break
-        
 
+      
+    
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
 
     valores_disponibles = [1+valor for valor in range(9)]
@@ -176,23 +186,24 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
         contador_iter = 0
         while True:
             if valores_disponibles[0] not in tablero_comprobar[contador_filas+numero]:
-                if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+numero]:
+                if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+valor]:
                     tablero_comprobar[contador_filas+numero][valor+contador_columnas] = valores_disponibles[0]
                     valores_disponibles.remove(valores_disponibles[0])
                     valor += 1
+                else:
+                    shuffle(valores_disponibles)
+                    contador_iter += 1 
             else:
                 shuffle(valores_disponibles)
                 contador_iter += 1
 
             if valor == 3:
                 break
-            elif contador_iter == 50:
+            elif contador_iter == 20:
                 break
-
-
+    
     for linea in tablero_comprobar:
-        print(linea)
-
+        print(linea)  
 
 random_tableros(tablero_comprobar)
 
