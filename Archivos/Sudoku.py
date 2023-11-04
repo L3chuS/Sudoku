@@ -143,15 +143,32 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador):
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
     
+    # Se añaden los primeros 3 números de la lista.
     for valor in range(3):
         if valores_disponibles[0] not in tablero_comprobar[contador]:
-            print(ordenar_tablero(tablero_comprobar[contador]))
-            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar[contador]):
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
                 tablero_comprobar[contador][valor] = valores_disponibles[0]
                 valores_disponibles.remove(valores_disponibles[0])
         else:
             shuffle(valores_disponibles)
 
+    # Se añaden del 4to al 6to número de la lista.
+    for valor in range(3):
+        if valores_disponibles[0] not in tablero_comprobar[contador+1]:
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
+                tablero_comprobar[contador+1][valor] = valores_disponibles[0]
+                valores_disponibles.remove(valores_disponibles[0])
+        else:
+            shuffle(valores_disponibles)
+
+    # Se añaden del 7mo al 9no número de la lista.
+    for valor in range(3):
+        if valores_disponibles[0] not in tablero_comprobar[contador+2]:
+            if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][valor]:
+                tablero_comprobar[contador+2][valor] = valores_disponibles[0]
+                valores_disponibles.remove(valores_disponibles[0])
+        else:
+            shuffle(valores_disponibles)
 
 
     
@@ -162,6 +179,7 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador):
 
 tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 random_tableros(tablero_comprobar)
+
 
 
 
