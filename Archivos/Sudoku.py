@@ -141,9 +141,7 @@ def random_tableros(tablero_comprobar):
     comprobador_subgrupos = [1+valor for valor in range(9)]
 
     comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
-
-    # tablero_modificado = copy.deepcopy(tablero_comprobar)
-
+    
     while True:
         contador = 0
         tablero_modificado = copy.deepcopy(tablero_comprobar)
@@ -162,7 +160,7 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
 
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
-    # Se añaden los primeros 3 números de la lista.
+    # Se añaden los 9 valores de la lista de 3 en 3.
     for numero in range(3):
         valor = 0
         contador_iter = 0
@@ -180,7 +178,6 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                 break
             elif contador_iter == 20:
                 break
-
 
     for linea in tablero_comprobar:
         print(linea)
