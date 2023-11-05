@@ -138,10 +138,8 @@ def random_tableros(tablero_comprobar):
 
     contador_filas = 0
     contador_columnas = 0
-    comprobador_subgrupos = [1+valor for valor in range(9)]
 
-
-    for subgrupo in range(3):
+    for subgrupo in range(6):
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
@@ -159,32 +157,48 @@ def random_tableros(tablero_comprobar):
             elif subgrupo == 3:
                 indice_filas = 3
                 tablero_modificado2 = copy.deepcopy(tablero_modificado1)
-                lanzar_tablero(tablero_modificado2, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
-            # elif subgrupo == 4:
-            #     indice_filas = 3
-            #     indice_columnas = 3
-            # elif subgrupo == 5:
-            #     indice_filas = 3
-            #     indice_columnas = 6
+                lanzar_tablero(tablero_modificado2, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo) 
+            elif subgrupo == 4:
+                indice_filas = 3
+                indice_columnas = 3
+                tablero_modificado3 = copy.deepcopy(tablero_modificado2)
+                lanzar_tablero(tablero_modificado3, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+            elif subgrupo == 5:
+                indice_filas = 3
+                indice_columnas = 6
+                tablero_modificado4 = copy.deepcopy(tablero_modificado3)
+                lanzar_tablero(tablero_modificado4, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
               
 def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
 
-    while True:
+    tablero_incorrecto = False
+
+    while tablero_incorrecto == False:
+            
+        contador = 0
         comprobar_lineas_random_tablero(tablero, contador_filas+indice_filas, contador_columnas+indice_columnas)
-        contador = 0         
+           
         for valor in ordenar_tablero(tablero)[1][subgrupo]:
             
             if valor != "*":
                 contador += 1
             elif valor == "*":
+                for linea in range(3):
+                    if 0 <= subgrupo < 3:
+                        tablero[linea] = ["*" for x in range (9)]
+                    elif 2 < subgrupo < 6:
+                        tablero[linea+3] = ["*" for x in range (9)]
+                    elif 5 < subgrupo < 9:
+                        tablero[linea+6] = ["*" for x in range (9)]
                 break
         if contador == 9:
+            tablero_incorrecto = True
             break
-
-      
-    
+        
+ 
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
-
+    print(contador_filas)
+    print(contador_columnas)
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
     # Se añaden los primeros 3 números de la lista.
