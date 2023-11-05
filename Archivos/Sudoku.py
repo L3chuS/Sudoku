@@ -139,35 +139,35 @@ def random_tableros(tablero_comprobar):
     contador_filas = 0
     contador_columnas = 0
 
-    for subgrupo in range(6):
+    for subgrupo in range(9):
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
             comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
 
-        else:   
+        else:
+
             if subgrupo == 1:
                 indice_columnas = 3
-                tablero_modificado = copy.deepcopy(tablero_comprobar)
-                lanzar_tablero(tablero_modificado, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
             elif subgrupo == 2:
                 indice_columnas = 6
-                tablero_modificado1 = copy.deepcopy(tablero_modificado)
-                lanzar_tablero(tablero_modificado1, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
             elif subgrupo == 3:
                 indice_filas = 3
-                tablero_modificado2 = copy.deepcopy(tablero_modificado1)
-                lanzar_tablero(tablero_modificado2, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo) 
             elif subgrupo == 4:
                 indice_filas = 3
                 indice_columnas = 3
-                tablero_modificado3 = copy.deepcopy(tablero_modificado2)
-                lanzar_tablero(tablero_modificado3, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
             elif subgrupo == 5:
                 indice_filas = 3
                 indice_columnas = 6
-                tablero_modificado4 = copy.deepcopy(tablero_modificado3)
-                lanzar_tablero(tablero_modificado4, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+            elif subgrupo == 6:
+                indice_filas = 6
+            elif subgrupo == 7:
+                indice_filas = 6
+                indice_columnas = 3
+            elif subgrupo == 8:
+                indice_filas = 6
+                indice_columnas = 6
+            lanzar_tablero(tablero_comprobar, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
               
 def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
 
@@ -197,8 +197,7 @@ def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indi
         
  
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
-    print(contador_filas)
-    print(contador_columnas)
+
     valores_disponibles = [1+valor for valor in range(9)]
     shuffle(valores_disponibles)
     # Se añaden los primeros 3 números de la lista.
@@ -222,27 +221,20 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                 break
             elif contador_iter == 20:
                 break
-    
-    for linea in tablero_comprobar:
-        print(linea)  
 
-random_tableros(tablero_comprobar)
+# random_tableros(tablero_comprobar)
 
+def comprobador_tablero_random(ind_tablero_comprobar):
 
+    while comprobador_victoria(ind_tablero_comprobar) == False:
 
-
-# def comprobador_tablero_random(ind_tablero_comprobar):
-
-#     while comprobador_victoria(ind_tablero_comprobar) == False:
-
-#         random_tableros()
+        random_tableros(ind_tablero_comprobar)
             
-#     return ind_tablero_comprobar
+    return ind_tablero_comprobar
+
+print(comprobador_tablero_random(tablero_comprobar))
 
 
-# x = [[1, 9, 3, 7, 6, 8, 2, 4, 1],[8, 7, 6, 1, 4, 2, 9, 5, 3],[1, 2, 4, 5, 9, 3, 7, 8, 6],[7, 6, 8, 9, 2, 5, 1, 3, 4],[4, 3, 2, 8, 1, 7, 6, 9, 5],[9, 1, 5, 6, 3, 4, 8, 7, 2],[6, 8, 1, 4, 5, 9, 3, 2, 7],[3, 4, 7, 2, 8, 1, 5, 6, 9],[2, 5, 9, 3, 7, 6, 4, 1, 8]]
-
-# print(comprobador_tablero_random(x))
 
 # def exportar_tableros():
 #     import csv
