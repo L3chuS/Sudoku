@@ -229,7 +229,6 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
 
 def comprobador_tablero_random(tablero_comprobar):
 
-    
 
     while comprobador_victoria(tablero_comprobar) == False:
         
