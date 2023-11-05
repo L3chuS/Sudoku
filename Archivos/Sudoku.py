@@ -1,7 +1,7 @@
 from random import shuffle
 
 # Se crea un tablero de 9x9.
-ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
 
 def presentacion_juego():
@@ -127,7 +127,6 @@ def comprobador_victoria(tablero_comprobar):
     else:
         return True
 
-tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
 def random_tableros(tablero_comprobar):
     """Función para generar tableros con valores aleatorios. Primero intenta agregar el valor 1 una vez por fila
@@ -139,6 +138,7 @@ def random_tableros(tablero_comprobar):
     contador_columnas = 0
 
     for subgrupo in range(9):
+        print(subgrupo)
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
@@ -167,13 +167,11 @@ def random_tableros(tablero_comprobar):
                 indice_filas = 6
                 indice_columnas = 6
             lanzar_tablero(tablero_comprobar, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
-              
+        
+
 def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
 
-    tablero_incorrecto = False
-
-    while tablero_incorrecto == False:
-            
+    while True:           
         contador = 0
         contador_iteraciones = 0
         comprobar_lineas_random_tablero(tablero, contador_filas+indice_filas, contador_columnas+indice_columnas)
@@ -184,16 +182,13 @@ def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indi
                 contador += 1
             elif valor == "*":
                 for linea in range(3):
-                    if 0 <= subgrupo < 3:
-                        # tablero[linea] = ["*" for x in range (9)]
-                        pass
-                    elif 2 < subgrupo < 6:
+                    if 2 < subgrupo < 6:
                         tablero[linea+3] = ["*" for x in range (9)]
                     elif 5 < subgrupo < 9:
-                        tablero[linea+6] = ["*" for x in range (9)]
+                        tablero[linea+6] = ["*" for x in range (9)]                    
                 break
+
         if contador == 9:
-            tablero_incorrecto = True
             break
         elif contador_iteraciones == 100:
             break
@@ -216,7 +211,8 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                     valor += 1
                 else:
                     shuffle(valores_disponibles)
-                    contador_iter += 1 
+                    contador_iter += 1
+   
             else:
                 shuffle(valores_disponibles)
                 contador_iter += 1
@@ -225,23 +221,26 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                 break
             elif contador_iter == 20:
                 break
+    
+    print("###################")
+    for linea in tablero_comprobar:
+        print(linea)
+    print("###################")
 
-    # for linea in tablero_comprobar:
-    #     print(linea)
-# random_tableros(tablero_comprobar)
+random_tableros(tablero_comprobar)
 
-def comprobador_tablero_random(ind_tablero_comprobar):
+# def comprobador_tablero_random(tablero_comprobar):
 
-    while comprobador_victoria(ind_tablero_comprobar) == False:
+#     while comprobador_victoria(tablero_comprobar) == False:
 
-        random_tableros(ind_tablero_comprobar)
+#         random_tableros(tablero_comprobar)
 
-        for linea in ind_tablero_comprobar:
-            print(linea)
+#         for linea in tablero_comprobar:
+#             print(linea)
             
-    return ind_tablero_comprobar
+#     return tablero_comprobar
 
-print(comprobador_tablero_random(tablero_comprobar))
+# print(comprobador_tablero_random(tablero_comprobar))
 
 
 # def generar_tableros_aleatorios(dificultad):
