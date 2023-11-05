@@ -138,7 +138,6 @@ def random_tableros(tablero_comprobar):
     contador_columnas = 0
 
     for subgrupo in range(9):
-        print(subgrupo)
         indice_filas = 0
         indice_columnas = 0
         if subgrupo == 0:
@@ -168,13 +167,15 @@ def random_tableros(tablero_comprobar):
                 indice_columnas = 6
             lanzar_tablero(tablero_comprobar, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
         
+contador_iter = 0
 
 def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
 
     # while True:           
     contador = 0
+    contador_iter = 0
     comprobar_lineas_random_tablero(tablero, contador_filas+indice_filas, contador_columnas+indice_columnas)
-        
+    
     for valor in ordenar_tablero(tablero)[1][subgrupo]:
 
         if valor != "*":
@@ -186,14 +187,12 @@ def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indi
                     tablero[linea+3] = ["*" for x in range (9)]
                 elif 5 < subgrupo < 9:
                     tablero[linea+6] = ["*" for x in range (9)]                    
-            break
+            # break
 
         # if contador == 9:
         #     break
 
 
-    
- 
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
 
     valores_disponibles = [1+valor for valor in range(9)]
@@ -220,26 +219,30 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                 break
             elif contador_iter == 20:
                 break
-    
-    print("###################")
-    for linea in tablero_comprobar:
-        print(linea)
-    print("###################")
+      
+    # print("###################")
+    # for linea in tablero_comprobar:
+    #     print(linea)
+    # print("###################")
 
 # random_tableros(tablero_comprobar)
 
 def comprobador_tablero_random(tablero_comprobar):
 
-    while comprobador_victoria(tablero_comprobar) == False:
+    
 
+    while comprobador_victoria(tablero_comprobar) == False:
+        
+        tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+        
         random_tableros(tablero_comprobar)
 
-        for linea in tablero_comprobar:
-            print(linea)
+    for linea in tablero_comprobar:
+        print(linea)
             
     return tablero_comprobar
 
-print(comprobador_tablero_random(tablero_comprobar))
+comprobador_tablero_random(tablero_comprobar)
 
 
 # def generar_tableros_aleatorios(dificultad):
