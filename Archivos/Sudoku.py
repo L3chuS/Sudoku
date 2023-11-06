@@ -1,7 +1,3 @@
-# Se crea un tablero de 9x9.
-tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
-
-
 def presentacion_juego():
     """Función que presenta el juego, lo explica y da lugar al comienzo o no."""
 
@@ -240,31 +236,42 @@ def generar_tableros_aleatorios(dificultad):
 
     from random import randrange
 
-    tablero_reordenado = [[], [], [], [], [], [], [], [], [],]
+    # Se genera un tablero vacío de 9x9.
     tablero_random = [["*" for c in range(9)] for f in range(9)]
+    # Tablero final que se va a retornar.
+    tablero_reordenado = [[], [], [], [], [], [], [], [], [],]
 
-    tablero_a_generar = comprobador_tablero_random(tablero_comprobar)
+    # Se genera un tablero válido nuevo.
+    tablero_a_generar = comprobador_tablero_random(tablero_random)
+    # Se reordena el tablero según sus subgrupos.
     valores_aleatorios = ordenar_tablero(tablero_a_generar)[1]
 
+    # Bucle que agregará 1,2 o 3 valores por cada subgrupo
     for i in range(9):
+        # Se generan índices aleatorios para determinar en qué parte del subgrupo se van a agregar los valores.
         indices_aleatorio1, indices_aleatorio2, indices_aleatorio3 = randrange(0,9), randrange(0,9), randrange(0,9)
         while True:
+            # Se verifica que los indices generados no se repitan.
             if indices_aleatorio1 == indices_aleatorio2:
                 indices_aleatorio2 = randrange(0,9)
-            if indices_aleatorio3 == indices_aleatorio2 or indices_aleatorio3 == indices_aleatorio1:
+            elif indices_aleatorio3 == indices_aleatorio2 or indices_aleatorio3 == indices_aleatorio1:
                 indices_aleatorio3 = randrange(0,9)
             else:
                 break
+        # Se agregan 3 valores por subgrupo en caso de que la dificultad elegida sea "Fácil".    
         if dificultad == "F" or dificultad == "f":
             tablero_random[i][indices_aleatorio1] = valores_aleatorios[i][indices_aleatorio1]
             tablero_random[i][indices_aleatorio2] = valores_aleatorios[i][indices_aleatorio2]
             tablero_random[i][indices_aleatorio3] = valores_aleatorios[i][indices_aleatorio3]
+        # Se agregan 2 valores por subgrupo en caso de que la dificultad elegida sea "Medio". 
         if dificultad == "M" or dificultad == "m":
             tablero_random[i][indices_aleatorio1] = valores_aleatorios[i][indices_aleatorio1]
             tablero_random[i][indices_aleatorio2] = valores_aleatorios[i][indices_aleatorio2]
+        # Se agregan 1 valor por subgrupo en caso de que la dificultad elegida sea "Difícil". 
         if dificultad == "D" or dificultad == "d":
             tablero_random[i][indices_aleatorio1] = valores_aleatorios[i][indices_aleatorio1]
 
+    # El tablero ordenado por subgrupos se reordena y se vuelca en el tablero final que utilizará el jugador.
     for elem in range(0,9,3):
         for i in range(3):
             tablero_reordenado[elem] += tablero_random[elem+i][:3]
