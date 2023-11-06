@@ -223,6 +223,7 @@ def comprobador_tablero_random(tablero_comprobar):
             
     return tablero_comprobar
 
+print(comprobador_tablero_random(tablero_comprobar))
 
 # def generar_tableros_aleatorios(dificultad):
 
