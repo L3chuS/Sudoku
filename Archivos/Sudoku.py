@@ -221,6 +221,7 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
             elif contador_iter == 20:
                 break
 
+
 def comprobador_tablero_random(tablero_comprobar):
     """Función que evalúa si un tablero es correcto. Lo retorna si es True o llama a la función de generar uno
     nuevo en caso de que sea False."""
@@ -287,7 +288,7 @@ def generar_tableros_aleatorios(dificultad):
 # #####################################################
 
 try:
-
+    
     while(True):
         # Se llama a la función inicial y se comienza o finaliza el juego según lo que se responda.
         if presentacion_juego() == None:
