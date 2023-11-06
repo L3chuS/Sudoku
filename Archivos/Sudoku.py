@@ -1,8 +1,7 @@
-import copy
 from random import shuffle
 
 # Se crea un tablero de 9x9.
-ind_tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
 
 def presentacion_juego():
@@ -128,7 +127,6 @@ def comprobador_victoria(tablero_comprobar):
     else:
         return True
 
-tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
 
 def random_tableros(tablero_comprobar):
     """Función para generar tableros con valores aleatorios. Primero intenta agregar el valor 1 una vez por fila
@@ -138,23 +136,56 @@ def random_tableros(tablero_comprobar):
 
     contador_filas = 0
     contador_columnas = 0
-    comprobador_subgrupos = [1+valor for valor in range(9)]
 
-    comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
+    for subgrupo in range(9):
+        indice_filas = 0
+        indice_columnas = 0
+        if subgrupo == 0:
+            comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas)
+
+        else:
+
+            if subgrupo == 1:
+                indice_columnas = 3
+            elif subgrupo == 2:
+                indice_columnas = 6
+            elif subgrupo == 3:
+                indice_filas = 3
+            elif subgrupo == 4:
+                indice_filas = 3
+                indice_columnas = 3
+            elif subgrupo == 5:
+                indice_filas = 3
+                indice_columnas = 6
+            elif subgrupo == 6:
+                indice_filas = 6
+            elif subgrupo == 7:
+                indice_filas = 6
+                indice_columnas = 3
+            elif subgrupo == 8:
+                indice_filas = 6
+                indice_columnas = 6
+            lanzar_tablero(tablero_comprobar, contador_filas, indice_filas,contador_columnas,indice_columnas,subgrupo)
+        
+contador_iter = 0
+
+def lanzar_tablero(tablero,contador_filas, indice_filas, contador_columnas, indice_columnas, subgrupo):
+         
+    contador = 0
+    comprobar_lineas_random_tablero(tablero, contador_filas+indice_filas, contador_columnas+indice_columnas)
     
-    while True:
-        contador = 0
-        tablero_modificado = copy.deepcopy(tablero_comprobar)
-        comprobar_lineas_random_tablero(tablero_modificado, contador_filas, contador_columnas+3)
-        
-        for valor in ordenar_tablero(tablero_modificado)[1][1]:
-            if valor != "*":
-                contador += 1
-            elif valor == "*":
-                break
-        if contador == 9:
-            break
-        
+    for valor in ordenar_tablero(tablero)[1][subgrupo]:
+
+        if valor != "*":
+            contador += 1
+
+        elif valor == "*":
+            for linea in range(3):
+                if 2 < subgrupo < 6:
+                    tablero[linea+3] = ["*" for x in range (9)]
+                elif 5 < subgrupo < 9:
+                    tablero[linea+6] = ["*" for x in range (9)]                    
+
 
 def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_columnas):
 
@@ -166,10 +197,13 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
         contador_iter = 0
         while True:
             if valores_disponibles[0] not in tablero_comprobar[contador_filas+numero]:
-                if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+numero]:
+                if valores_disponibles[0] not in ordenar_tablero(tablero_comprobar)[0][contador_columnas+valor]:
                     tablero_comprobar[contador_filas+numero][valor+contador_columnas] = valores_disponibles[0]
                     valores_disponibles.remove(valores_disponibles[0])
                     valor += 1
+                else:
+                    shuffle(valores_disponibles)
+                    contador_iter += 1   
             else:
                 shuffle(valores_disponibles)
                 contador_iter += 1
@@ -179,61 +213,16 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
             elif contador_iter == 20:
                 break
 
-    for linea in tablero_comprobar:
-        print(linea)
+def comprobador_tablero_random(tablero_comprobar):
 
-
-random_tableros(tablero_comprobar)
-
-
-
-
-# def comprobador_tablero_random(ind_tablero_comprobar):
-
-#     while comprobador_victoria(ind_tablero_comprobar) == False:
-
-#         random_tableros()
+    while comprobador_victoria(tablero_comprobar) == False:
+        
+        tablero_comprobar = [["*" for c in range(9)] for f in range(9)]
+        
+        random_tableros(tablero_comprobar)
             
-#     return ind_tablero_comprobar
+    return tablero_comprobar
 
-
-# x = [[1, 9, 3, 7, 6, 8, 2, 4, 1],[8, 7, 6, 1, 4, 2, 9, 5, 3],[1, 2, 4, 5, 9, 3, 7, 8, 6],[7, 6, 8, 9, 2, 5, 1, 3, 4],[4, 3, 2, 8, 1, 7, 6, 9, 5],[9, 1, 5, 6, 3, 4, 8, 7, 2],[6, 8, 1, 4, 5, 9, 3, 2, 7],[3, 4, 7, 2, 8, 1, 5, 6, 9],[2, 5, 9, 3, 7, 6, 4, 1, 8]]
-
-# print(comprobador_tablero_random(x))
-
-# def exportar_tableros():
-#     import csv
-
-#     numero_tableros_exportados = 0
-
-#     while numero_tableros_exportados < 50:
-#         with open("Tableros Exportados.csv", "a", newline="\n") as fichero:
-#             writer = csv.writer(fichero, delimiter=",")
-#             for linea in range(1):
-#                 writer.writerow(comprobador_tablero_random(ind_tablero_comprobar))
-#         numero_tableros_exportados += 1
-#     return ""
-
-# def leer_tableros_exportados():
-#     import csv
-#     from random import randrange
-
-#     with open("Tableros Exportados.csv", "r", newline="") as fichero:
-#         reader = csv.reader(fichero, delimiter=",")
-#         ref = ["1","2","3","4","5","6","7","8","9"]
-#         valor = []
-#         contador = 0
-#         tab_convertido = list(reader)[randrange(50)]
-
-#         for f in tab_convertido:
-#             valor.append([])
-#             for e in f:
-#                 if e in ref:
-#                     e = int(e)
-#                     valor[contador].append(e)
-#             contador += 1        
-
-#     return valor
 
 # def generar_tableros_aleatorios(dificultad):
 
