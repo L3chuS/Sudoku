@@ -11,12 +11,12 @@ el 1 y el 9. Cada fila y cada columna deberá
 contener todos los números del 1 al 9 sin importar
 el orden. A su vez, los subcuadros de 3x3 (3 filas
 y 3 columnas) deberán tener también todos los
-números. El juego finaliza cuando logras completar
+números. El juego finaliza cuando logres completar
 cada fila, columna y subcuadro con los valores
 entre el 1 y el 9. Puedes añadir y quitar cada
 número las veces que haga falta excepto los números
 iniciales.
-Si deseas continuar escriba "C". En caso contrario
+Si deseas continuar escribe "C". En caso contrario
 escriba "S".""")
 
     # Bucle que evalúa la elección del usuario para comenzar, finalizar o indicar una opción inválida.
@@ -33,7 +33,7 @@ escriba "S".""")
                 raise ValueError
 
         except ValueError:
-            print("\nLa opción elegida no es correcta. Vuelva a intentarlo.")
+            print("\nLa opción elegida no es correcta. Vuelve a intentarlo.")
         except KeyboardInterrupt:
             print("\n\nHasta luego")
             return None
@@ -71,18 +71,19 @@ def dibujar_tablero(lista_tablero):
 def modificar_tablero(fila, columna, valor, tablero_modificar):
     """Función que modifica el tablero del juego. Toma 4 argumentos. Los primeros 3
        son los que se utilizan para modificar el último en el índice correspondiente."""
+    
     tablero_modificar[fila-1][columna-1] = valor
 
 
 def ordenar_tablero(tablero_ordenar):
     """Función que reordena las columnas y subgrupos del juego (cada grupo de 3x3) para poder
-       evaluar si son válidos o no. Es decir, devuelve cada columna o cada subgrupo para verificar
-       si cumple con las condiciones de victoria o no."""
+       evaluar si son válidos o no. Es decir, devuelve cada columna o cada subgrupo por separado
+       para verificar si cumplen con las condiciones de victoria o no.  """
 
     columnas_ordenadas = []
     subgrupos_ordenados = [[] for i in range (9)]
 
-    # Se intera por cada fila del tablero.
+    # Se itera por cada fila del tablero.
     for filas in range(9):
         # Se crea una lista vacía para añadirle los valores de cada columna.
         comprobador_columnas = []
@@ -121,7 +122,7 @@ def comprobador_victoria(tablero_comprobar):
 
 
 def random_tableros(tablero_comprobar):
-    """Función para generar tableros con valores aleatorios. Se utiliza un for que va agregando cada subgrupo
+    """Función para generar tableros nuevos con valores aleatorios. Se utiliza un for que va agregando cada subgrupo
     del juego."""
 
     # Varible que determina sobre qué fila se van a añadir los valores.
@@ -214,7 +215,7 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
                 shuffle(valores_disponibles)
                 contador_iter += 1
 
-            # Finaliza el bucle cuando se añaden 3 elementos a una fila para luego pasar.
+            # Finaliza el bucle cuando se añaden 3 elementos a una fila para luego pasar a la fila siguiente.
             if valor == 3:
                 break
             # Finaliza el bucle cuando se alcanza el máximo de intentos de "desordenar la lista" para evitar un bucle infinito.
@@ -223,8 +224,8 @@ def comprobar_lineas_random_tablero(tablero_comprobar, contador_filas, contador_
 
 
 def comprobador_tablero_random(tablero_comprobar):
-    """Función que evalúa si un tablero es correcto. Lo retorna si es True o llama a la función de generar uno
-    nuevo en caso de que sea False."""
+    """Función que evalúa si un tablero es correcto. Lo retorna si es "True" o llama a la función de generar uno
+    nuevo en caso de que sea "False"."""
 
     while comprobador_victoria(tablero_comprobar) == False:
         # Restablece el tablero a cero para enviar a la función un tablero vacío.
